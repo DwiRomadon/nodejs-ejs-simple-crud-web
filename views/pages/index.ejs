@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <title>Welcome to my webs</title>
+</head>
+
+<body>
+    <%- include('../menu/nav'); %>
+        <div class="container">
+            <div class="col-auto">
+                <div>
+                    <h3>Data Dosen</h3>
+                </div>
+                <a href="/input-dosen">
+                    <button type="button" class="btn btn-primary">Tambah Dosen</button>
+                </a>
+                <table class="table table-striped text-center mt-2">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nama Dosen</th>
+                            <th scope="col">Tanggal Lahir</th>
+                            <th scope="col">Alamat</th>
+                            <th scope="col">No Telp</th>
+                            <th scope="col">Jenis Kelamin</th>
+                            <th scope="col">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% datas.forEach(function(data, i) { %>
+                            <tr>
+                                <th scope="row">
+                                    <%= i+1 %>
+                                </th>
+                                <td>
+                                    <%= data.nama_dosen %>
+                                </td>
+                                <td>
+                                    <%= moment(data.tgl_lahir).format('DD MMMM, YYYY') %>
+                                </td>
+                                <td>
+                                    <%= data.alamat %>
+                                </td>
+                                <td>
+                                    <%= data.no_telp %>
+                                </td>
+                                <td>
+                                    <%= data.jenis_kelamin %>
+                                </td>
+                                <td>
+                                    <div>
+                                        <button type="button" class="btn btn-warning">Edit</button>
+                                        <a href="/<%= data.nidn %>">
+                                            <input type="button" name="_method" class="btn btn-danger" value="Hapus">
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model dosen {
+  nidn           String              @id @db.VarChar(12)
+  nama_dosen     String              @db.VarChar(50)
+  no_telp        String              @db.VarChar(16)
+  alamat         String              @db.Text
+  jenis_kelamin  dosen_jenis_kelamin
+  gelar_depan    String              @db.VarChar(10)
+  gelar_belakang String              @db.VarChar(50)
+  tgl_lahir      DateTime            @db.Date
+  krs            krs[]
+}
+
+model krs {
+  npm        String   @db.VarChar(11)
+  nidn       String   @db.VarChar(12)
+  kode_mk    String   @db.VarChar(10)
+  hari       String   @db.VarChar(9)
+  ruang      String   @db.VarChar(9)
+  jam_masuk  DateTime @db.Time(0)
+  jam_keluar DateTime @db.Time(0)
+  id_krs     Int      @id @default(autoincrement())
+  mhs        mhs      @relation(fields: [npm], references: [npm], onUpdate: Restrict, map: "krs_ibfk_1")
+  dosen      dosen    @relation(fields: [nidn], references: [nidn], onUpdate: Restrict, map: "krs_ibfk_2")
+  matkul     matkul   @relation(fields: [kode_mk], references: [kode_mk], onUpdate: Restrict, map: "krs_ibfk_3")
+
+  @@index([kode_mk], map: "kode_mk")
+  @@index([nidn], map: "nidn")
+  @@index([npm], map: "npm")
+}
+
+model matkul {
+  kode_mk  String @id @db.VarChar(10)
+  nama_mk  String @db.VarChar(50)
+  sks      Int
+  semester Int
+  krs      krs[]
+}
+
+model mhs {
+  npm           String            @id @db.VarChar(11)
+  nama          String            @db.VarChar(50)
+  no_telp       String            @db.VarChar(16)
+  alamat        String            @db.Text
+  jenis_kelamin mhs_jenis_kelamin
+  prodi         String            @db.VarChar(25)
+  tgl_lahir     DateTime          @db.Date
+  krs           krs[]
+}
+
+enum dosen_jenis_kelamin {
+  Laki_Laki @map("Laki-Laki")
+  Perempuan
+}
+
+enum mhs_jenis_kelamin {
+  Laki_laki @map("Laki-laki")
+  Perempuan
+}

@@ -39,14 +39,12 @@ exports.inputDosen = async (req, res) => {
 
 exports.deleteDosen = async (req, res) => {
     try {
-        console.log(req.params.nidn)
         await prisma.dosen.delete({ where: { nidn: req.params.nidn } })
         res.writeHead(302, {
             'Location': '/'
         })
         res.end()
     } catch (error) {
-        console.log(error)
         return res.render('./error/500')
     }
 }

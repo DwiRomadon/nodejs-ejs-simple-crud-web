@@ -45,6 +45,6 @@ exports.deleteDosen = async (req, res) => {
         })
         res.end()
     } catch (error) {
-        return res.render('./error/500')
+        return res.status(500).render('./error/500');
     }
 }
